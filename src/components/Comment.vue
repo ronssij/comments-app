@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-column mb-2">
+  <div class="d-flex flex-column my-5 py-1 line">
     <div>
       <span class="font-weight-bold text-decoration-underline">
         @{{ parentComment.username }}
@@ -14,7 +14,7 @@
       {{ parentComment.comment }}
     </div>
 
-    <div class="mt-1 mb-2">
+    <div v-if="parentComment.depth < 2" class="mt-1 mb-2">
       <v-btn class="px-1" color="grey" @click="toReply = !toReply" small text>
         <v-icon class="mr-1" small>mdi-message-outline</v-icon>
         <span> Reply </span>
@@ -22,7 +22,7 @@
     </div>
 
     <template v-if="toReply">
-      <div class="mt-1 mb-3">
+      <div class="mt-1">
         <v-textarea
           v-model="reply"
           rows="2"
@@ -111,6 +111,8 @@ export default {
       // add comment as a reply on the parent comment,
       if (this.comment) {
         params = { ...params, comment_id: this.parentComment.id };
+      } else {
+        params = { ...params, comment_id: this.item.id };
       }
 
       const reply = new CommentModel(params).for(this.blog);
@@ -124,3 +126,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.line {
+  border-left: 2px solid #e0e0e0;
+  padding: 15px;
+}
+</style>

@@ -33,8 +33,12 @@
     <v-card-text class="px-4 pb-0">
       <div class="d-flex flex-column">
         <template v-if="blog.comments.length">
-          <template v-for="comment in blog.comments">
+          <template v-for="(comment, index) in blog.comments">
             <comment :item="comment" :blog="blog" :key="comment.id" />
+            <v-divider
+              v-if="index < blog.comments.length - 1"
+              :key="`line-${comment.id}`"
+            />
           </template>
         </template>
       </div>
