@@ -56,6 +56,7 @@
 import Replies from "@/components/CommentReplies";
 import CommentModel from "@/models/Comment";
 import BlogModel from "@/models/Blog";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Comment",
@@ -91,6 +92,12 @@ export default {
     };
   },
 
+  computed: {
+    ...mapGetters({
+      usernameState: "getUsername",
+    }),
+  },
+
   created() {
     this.parentComment = this.item;
   },
@@ -103,7 +110,7 @@ export default {
 
       let params = {
         blog_id: blog.id,
-        username: "cjronxel",
+        username: this.usernameState,
         comment: this.reply,
       };
 

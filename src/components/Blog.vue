@@ -52,6 +52,7 @@
 import CommentModel from "@/models/Comment";
 import Comment from "@/components/Comment";
 import Blog from "@/models/Blog";
+import { mapGetters } from "vuex";
 
 export default {
   components: { Comment },
@@ -75,6 +76,12 @@ export default {
     };
   },
 
+  computed: {
+    ...mapGetters({
+      usernameState: "getUsername",
+    }),
+  },
+
   created() {
     this.blog = this.item;
   },
@@ -85,7 +92,7 @@ export default {
 
       const comment = new CommentModel({
         blog_id: this.blog.id,
-        username: "cjronxel",
+        username: this.usernameState,
         comment: this.comment,
       }).for(this.blog);
 
